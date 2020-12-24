@@ -1,0 +1,21 @@
+table {
+  border-spacing: 0;
+}
+
+tr.selected td {
+  background: paleturquoise;
+}
+
+th {
+  background: #f1f1f1;
+  position: sticky;
+  top: 0;
+}
+
+th,
+td {
+  border: 0 solid #ddd;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  padding: 5px;
+}

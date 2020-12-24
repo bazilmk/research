@@ -1,0 +1,20 @@
+main {
+  background: #fafafa;
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1px;
+}
+
+section {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  overflow: auto;
+}
+
+section:last-child {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}

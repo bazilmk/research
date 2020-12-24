@@ -1,0 +1,11 @@
+#tooltip {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 0.5em;
+  border: 1px solid black;
+  color: white;
+  pointer-events: none;
+  z-index: 1;
+  transform: translateX(-100%);
+}
