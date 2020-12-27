@@ -8,8 +8,16 @@ export class Table extends Component {
 
     const { features } = props;
     this.state = {
-      columns: ["ID", "Actual", "Predicted", "Difference", ...features],
+      columns: ["Actual", "Predicted", "Difference", "Intercept", ...features],
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.features !== this.props.features) {
+      this.setState({
+        columns: [...this.state.columns, ...this.props.features],
+      });
+    }
   }
 
   render() {

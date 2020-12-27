@@ -1,65 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "react-vis/dist/style.css";
 
 import "./App.css";
-import { GlobalExplanations, LocalExplanation, Table } from "./components";
-
-const features = [
-  "LotArea",
-  "YearBuilt",
-  "GrLivArea",
-  "KitchenAbvGr",
-  "FirstFlrSF",
-  "PoolArea",
-  "TotalBsmtSF",
-  "BsmtFinSFOne",
-  "BsmtUnfSF",
-  "GarageYrBlt",
-  "EnclosedPorch",
-  "WoodDeckSF",
-  "MSSubClass",
-  "MiscVal",
-  "OpenPorchSF",
-  "ThreeSsnPorch",
-  "YearRemodAdd",
-  "YrSold",
-  "GarageArea",
-  "LowQualFinSF",
-  "BsmtFinSFTwo",
-  "OverallCond",
-  "MoSold",
-  "SecondFlrSF",
-  "TotRmsAbvGrd",
-  "ScreenPorch",
-  "Fireplaces",
-  "OverallQual",
-  "HalfBath",
-  "MasVnrArea",
-  "GarageCars",
-  "LotFrontage",
-  "BsmtFullBath",
-  "FullBath",
-  "BedroomAbvGr",
-  "BsmtHalfBath",
-];
-
-const data = new Array(features.length).fill(1).map(() => {
-  const row = {};
-  features.forEach((feature) => (row[feature] = Math.random() * 1000 - 500));
-  return row;
-});
+import { LocalExplanation, Table } from "./components";
 
 function App() {
   const [selectedRowIndex, setSelectedRowIndex] = useState();
+  const [features, setFeatures] = useState([]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch("/output.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setFeatures(data[0]["feature_names"]);
+        setData(
+          data.map((row) => ({
+            ...row["feature_names"].reduce(
+              (object, current, index) => ({
+                ...object,
+                [current]: row["local_scores"][index],
+              }),
+              {}
+            ),
+            Actual: row["actual_score"],
+            Predicted: row["predicted_score"],
+            Difference: row["difference"],
+            Intercept: row["intercept"],
+          }))
+        );
+      });
+  }, []);
 
   return (
     <main>
-      <GlobalExplanations
-        data={data}
-        features={features}
-        selectedRowIndex={selectedRowIndex}
-      />
       <LocalExplanation
         data={data}
         features={features}
