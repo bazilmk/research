@@ -21,6 +21,7 @@ export class LocalExplanation extends Component {
     super(props);
 
     this.state = {
+      data: {},
       dimensions: { width: 0, height: 0 },
       displayMode: "resquarify",
     };
@@ -51,10 +52,10 @@ export class LocalExplanation extends Component {
         ) : (
           <>
             {displayMode === "waterfall" ? (
-              <FlexibleXYPlot xType="ordinal">
+              <FlexibleXYPlot xType="ordinal" yDomain={[data.minY, data.maxY]}>
                 <HorizontalGridLines />
                 <VerticalBarSeries
-                  data={data}
+                  data={data.data}
                   colorType="literal"
                   onValueMouseOver={(data) =>
                     this.updateTooltipData({
@@ -146,6 +147,7 @@ export class LocalExplanation extends Component {
         x: feature,
         y: value,
         color: value < 0 ? COLORS.red : COLORS.green,
+        y0: 0,
       };
 
       const insertIndex = children.findIndex(({ y }) => y > value);
@@ -157,7 +159,7 @@ export class LocalExplanation extends Component {
       }
     });
 
-    return children.reduce(
+    const data = children.reduce(
       (collector, child, index) => [
         ...collector,
         index > 0
@@ -166,10 +168,38 @@ export class LocalExplanation extends Component {
               y: collector[index - 1].y + child.y,
               y0: collector[index - 1].y,
             }
-          : { ...child, y0: 0 },
+          : {
+              ...child,
+              y: child.y + selectedRow["Intercept"],
+              y0: child.y0 + selectedRow["Intercept"],
+            },
       ],
       []
     );
+
+    const minY = data.reduce((minValue, currentValue) => {
+      const currentMinValue = Math.min(currentValue.y, currentValue.y0);
+
+      console.log(currentMinValue, currentValue);
+
+      return minValue === undefined || currentMinValue < minValue
+        ? currentMinValue
+        : minValue;
+    }, undefined);
+
+    const maxY = data.reduce((maxValue, currentValue) => {
+      const currentMaxValue = Math.max(currentValue.y, currentValue.y0);
+
+      return maxValue === undefined || currentMaxValue > maxValue
+        ? currentMaxValue
+        : maxValue;
+    }, undefined);
+
+    return {
+      data,
+      minY: Math.floor(minY),
+      maxY: Math.ceil(maxY),
+    };
   }
 
   getPositiveChildren() {
