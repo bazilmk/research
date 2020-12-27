@@ -11,7 +11,7 @@ function App() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("/output.json")
+    fetch("output.json")
       .then((response) => response.json())
       .then((data) => {
         setFeatures(data[0]["feature_names"]);
