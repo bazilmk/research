@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import {
   FlexibleXYPlot,
   HorizontalGridLines,
+  LabelSeries,
+  LineSeries,
   Treemap,
   VerticalBarSeries,
   XAxis,
@@ -65,6 +67,27 @@ export class LocalExplanation extends Component {
                     })
                   }
                 />
+                {data.data !== undefined && [
+                  <LineSeries
+                    strokeStyle="dashed"
+                    data={[
+                      { x: data.data[0].x, y: data.data[0].y0 },
+                      {
+                        x: data.data[data.data.length - 1].x,
+                        y: data.data[0].y0,
+                      },
+                    ]}
+                  />,
+                  <LabelSeries
+                    data={[
+                      {
+                        x: data.data[Math.floor(data.data.length / 2)].x,
+                        y: data.data[0].y0,
+                        label: "Intercept",
+                      },
+                    ]}
+                  />,
+                ]}
                 <XAxis title="Feature" tickLabelAngle={270} />
                 <YAxis title="Contribution" />
               </FlexibleXYPlot>
@@ -179,8 +202,6 @@ export class LocalExplanation extends Component {
 
     const minY = data.reduce((minValue, currentValue) => {
       const currentMinValue = Math.min(currentValue.y, currentValue.y0);
-
-      console.log(currentMinValue, currentValue);
 
       return minValue === undefined || currentMinValue < minValue
         ? currentMinValue
