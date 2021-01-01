@@ -26,9 +26,7 @@ export class Tooltip extends PureComponent {
     const { data } = this.props;
     return data && data.size ? (
       <div id="tooltip" style={{ left, top, background: data.color }}>
-        {data.title}
-        <br />
-        {data.size}
+        {data.title}:&nbsp;ca.&nbsp;{Math.round(data.size * 100) / 100}
       </div>
     ) : (
       <></>
