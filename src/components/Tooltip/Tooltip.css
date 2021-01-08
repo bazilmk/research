@@ -7,5 +7,5 @@
   color: white;
   pointer-events: none;
   z-index: 1;
-  transform: translateX(-100%);
+  transform: translateY(-100%);
 }

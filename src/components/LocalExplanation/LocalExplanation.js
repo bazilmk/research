@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  FlexibleXYPlot,
+  XYPlot,
   HorizontalGridLines,
   LabelSeries,
   LineSeries,
@@ -50,11 +50,17 @@ export class LocalExplanation extends Component {
         onMouseLeave={this.resetTooltipData}
       >
         {selectedRowIndex === undefined ? (
-          "Select a row in the table below"
+          <div style={{ padding: "1em", fontSize: 30, color: "red" }}>
+            Select a row in the table
+          </div>
         ) : (
           <>
             {displayMode === "waterfall" ? (
-              <FlexibleXYPlot xType="ordinal" yDomain={[data.minY, data.maxY]}>
+              <XYPlot
+                {...dimensions}
+                xType="ordinal"
+                yDomain={[data.minY, data.maxY]}
+              >
                 <HorizontalGridLines />
                 <VerticalBarSeries
                   data={data.data}
@@ -88,9 +94,9 @@ export class LocalExplanation extends Component {
                     ]}
                   />,
                 ]}
-                <XAxis title="Feature" tickLabelAngle={270} />
+                <XAxis title="Feature" />
                 <YAxis title="Contribution" />
-              </FlexibleXYPlot>
+              </XYPlot>
             ) : (
               <Treemap
                 title={"Test"}
@@ -122,8 +128,8 @@ export class LocalExplanation extends Component {
 
   updateSize(containerElement) {
     if (containerElement !== null) {
-      const { clientWidth: width, clientHeight: height } = containerElement;
-      this.setState({ dimensions: { width, height } });
+      const { clientHeight: height } = containerElement;
+      this.setState({ dimensions: { width: height, height } });
     }
   }
 
