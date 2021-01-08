@@ -136,16 +136,8 @@ export class LocalExplanation extends Component {
       } else {
         data = {
           children: [
-            {
-              title: "Negative",
-              children: this.getPositiveChildren(),
-              color: "none",
-            },
-            {
-              title: "Positive",
-              children: this.getNegativeChildren(),
-              color: "none",
-            },
+            ...this.getPositiveChildren(),
+            ...this.getNegativeChildren(),
           ],
         };
       }
