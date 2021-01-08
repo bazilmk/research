@@ -231,7 +231,7 @@ export class LocalExplanation extends Component {
     return this.getChildren(false);
   }
 
-  getChildren(returnPositiveChilren) {
+  getChildren(returnPositiveChildren) {
     const { selectedRowIndex } = this.props;
 
     if (selectedRowIndex === undefined) return [];
@@ -239,12 +239,12 @@ export class LocalExplanation extends Component {
     const children = [];
 
     const selectedRow = this.props.data[selectedRowIndex];
-    const color = returnPositiveChilren ? COLORS.green : COLORS.red;
+    const color = returnPositiveChildren ? COLORS.green : COLORS.red;
     this.props.features.forEach((feature) => {
       const value = selectedRow[feature];
       if (
-        (!returnPositiveChilren && value < 0) ||
-        (returnPositiveChilren && value > 0)
+        (!returnPositiveChildren && value < 0) ||
+        (returnPositiveChildren && value > 0)
       )
         children.push({ title: feature, size: Math.abs(value), color });
     });
