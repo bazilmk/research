@@ -242,7 +242,10 @@ export class LocalExplanation extends Component {
     const color = returnPositiveChilren ? COLORS.green : COLORS.red;
     this.props.features.forEach((feature) => {
       const value = selectedRow[feature];
-      if ((!returnPositiveChilren && value < 0) || returnPositiveChilren)
+      if (
+        (!returnPositiveChilren && value < 0) ||
+        (returnPositiveChilren && value > 0)
+      )
         children.push({ title: feature, size: Math.abs(value), color });
     });
     return children;
