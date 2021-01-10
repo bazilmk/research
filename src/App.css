@@ -6,7 +6,7 @@ main {
 }
 
 section {
-  overflow: scroll;
+  overflow: auto;
 }
 
 section:first-child {
