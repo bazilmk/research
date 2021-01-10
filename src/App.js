@@ -9,6 +9,7 @@ function App() {
   const [selectedRowIndex, setSelectedRowIndex] = useState();
   const [features, setFeatures] = useState([]);
   const [data, setData] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -37,6 +38,7 @@ function App() {
             Intercept: row["intercept"],
           }))
         );
+        setLoading(false);
       });
   }, []);
 
@@ -53,6 +55,7 @@ function App() {
         selectedRowIndex={selectedRowIndex}
         data={data}
       />
+      {isLoading && <div id="loader">Loading data...</div>}
     </main>
   );
 }
