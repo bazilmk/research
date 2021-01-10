@@ -244,7 +244,11 @@ export class LocalExplanation extends Component {
         (!returnPositiveChildren && value < 0) ||
         (returnPositiveChildren && value > 0)
       )
-        children.push({ title: feature, size: Math.abs(value), color });
+        children.push({
+          title: feature.replace(/([a-z])([A-Z])|(\d)(\D)|(\D)(\d)/g, "$1 $2"),
+          size: Math.abs(value),
+          color,
+        });
     });
     return children;
   }
