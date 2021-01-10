@@ -11,7 +11,14 @@ function App() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("output.json")
+    const searchParams = new URLSearchParams(window.location.search);
+
+    const dataFileName =
+      searchParams.get("d") === "b"
+        ? "hd_data_gam_local_output.json"
+        : "output.json";
+
+    fetch(dataFileName)
       .then((response) => response.json())
       .then((data) => {
         setFeatures(data[0]["feature_names"]);
