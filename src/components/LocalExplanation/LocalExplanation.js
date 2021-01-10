@@ -37,6 +37,8 @@ export class LocalExplanation extends Component {
     this.getChildren = this.getChildren.bind(this);
 
     this.getDataForWaterfall = this.getDataForWaterfall.bind(this);
+
+    this.ref = React.createRef(null);
   }
 
   render() {
@@ -98,18 +100,21 @@ export class LocalExplanation extends Component {
                 <YAxis title="Contribution" />
               </XYPlot>
             ) : (
-              <Treemap
-                title={"Test"}
-                data={data}
-                mode={displayMode}
-                hideRootNode
-                colorType="literal"
-                onLeafMouseOver={({ data }) => this.updateTooltipData(data)}
-                onLeafClick={(...args) => console.log("klikk", [args])}
-                padding={1}
-                margin={0}
-                {...dimensions}
-              />
+              <>
+                <Treemap
+                  title={"Test"}
+                  data={data}
+                  mode={displayMode}
+                  hideRootNode
+                  colorType="literal"
+                  onLeafMouseOver={({ data }) => this.updateTooltipData(data)}
+                  onLeafClick={(...args) => console.log("klikk", [args])}
+                  padding={1}
+                  margin={0}
+                  {...dimensions}
+                />
+                <span ref={this.ref} />
+              </>
             )}
             <Tooltip data={tooltipData} />
           </>
@@ -135,6 +140,26 @@ export class LocalExplanation extends Component {
 
   componentDidUpdate(prevProps) {
     const { selectedRowIndex } = this.props;
+    if (this.ref.current) {
+      const leaves = this.ref.current.parentElement.getElementsByClassName(
+        "rv-treemap__leaf"
+      );
+      Array.from(leaves).forEach((leaf) => {
+        const leadExtremeDimension = Math.min(
+          leaf.clientWidth,
+          leaf.clientHeight
+        );
+
+        const textNode = leaf.children[0];
+        const textNodeExtremeDimension = Math.max(
+          textNode.offsetWidth,
+          textNode.offsetHeight
+        );
+
+        const scale = leadExtremeDimension / textNodeExtremeDimension;
+        textNode.style.transform = `scale(${scale})`;
+      });
+    }
     if (selectedRowIndex !== prevProps.selectedRowIndex) {
       let data;
       if (this.state.displayMode === "waterfall") {
