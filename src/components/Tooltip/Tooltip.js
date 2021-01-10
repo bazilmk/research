@@ -1,5 +1,7 @@
 import React, { PureComponent } from "react";
 
+import { COLORS } from "../../constants";
+
 import "./Tooltip.css";
 
 export class Tooltip extends PureComponent {
@@ -24,9 +26,12 @@ export class Tooltip extends PureComponent {
   render() {
     const { left, top } = this.state.position;
     const { data } = this.props;
+    const valueSign = data && data.color === COLORS.red ? "-" : "";
     return data && data.size ? (
       <div id="tooltip" style={{ left, top, background: data.color }}>
-        {data.title}:&nbsp;ca.&nbsp;{Math.round(data.size * 100) / 100}
+        {data.title}:&nbsp;ca.&nbsp;
+        {valueSign}
+        {Math.round(data.size * 10000) / 10000}
       </div>
     ) : (
       <></>

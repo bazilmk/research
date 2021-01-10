@@ -10,13 +10,9 @@ import {
   YAxis,
 } from "react-vis";
 import { Tooltip } from "..";
+import { COLORS } from "../../constants";
 
 import "./LocalExplanation.css";
-
-const COLORS = {
-  red: "#bf212f",
-  green: "#006f3c",
-};
 
 export class LocalExplanation extends Component {
   constructor(props) {
@@ -276,6 +272,7 @@ export class LocalExplanation extends Component {
             "$1\u200B$2"
           ),
           size: Math.abs(value),
+          value: 1,
           color,
         });
     });
