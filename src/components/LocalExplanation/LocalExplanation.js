@@ -245,7 +245,10 @@ export class LocalExplanation extends Component {
         (returnPositiveChildren && value > 0)
       )
         children.push({
-          title: feature.replace(/([a-z])([A-Z])|(\d)(\D)|(\D)(\d)/g, "$1 $2"),
+          title: feature.replace(
+            /([a-z])([A-Z])|(\d)(\D)|(\D)(\d)/g,
+            "$1\u200B$2"
+          ),
           size: Math.abs(value),
           color,
         });
