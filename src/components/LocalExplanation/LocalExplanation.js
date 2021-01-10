@@ -94,7 +94,7 @@ export class LocalExplanation extends Component {
                     ]}
                   />,
                 ]}
-                <XAxis title="Feature" />
+                <XAxis title="Feature" tickLabelAngle={270} />
                 <YAxis title="Contribution" />
               </XYPlot>
             ) : (
