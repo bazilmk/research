@@ -112,6 +112,7 @@ export class LocalExplanation extends Component {
                   padding={1}
                   margin={0}
                   {...dimensions}
+                  sortFunction={(a, b) => -(a.value - b.value)}
                 />
                 <span ref={this.ref} />
               </>
