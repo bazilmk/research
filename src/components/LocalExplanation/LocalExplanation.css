@@ -1,3 +1,8 @@
+.rv-treemap:not(.rv-treemap-circle-packed) > div > .rv-treemap__leaf__content {
+  float: left;
+  transform-origin: top left;
+}
+
 .rv-treemap__leaf__content {
   text-align: center;
   overflow: visible;
