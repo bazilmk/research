@@ -19,7 +19,7 @@ export class Table extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.data !== this.props.data) {
-      this.setState({ data: this.props.data });
+      this.setState({ sortedData: this.props.data });
     }
     if (prevProps.features !== this.props.features) {
       this.setState({
