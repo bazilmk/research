@@ -1,7 +1,32 @@
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  padding: 10px;
+  flex-shrink: 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: 14pt;
+}
+
+header div {
+  flex-grow: 1;
+  text-align: right;
+}
+
+header label:first-child {
+  margin-right: 10px;
+}
+
 main {
   background: #fafafa;
-  height: 100%;
-  width: 100%;
+  flex-grow: 1;
   display: flex;
 }
 
@@ -32,4 +57,6 @@ section:last-child {
   padding: 100px;
 
   font-size: 80pt;
+
+  opacity: 0.8;
 }

@@ -11,9 +11,9 @@ function App() {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
+  const searchParams = new URLSearchParams(window.location.search);
 
+  useEffect(() => {
     const dataFileName =
       searchParams.get("d") === "b"
         ? "hd_data_gam_local_output.json"
@@ -43,20 +43,57 @@ function App() {
   }, []);
 
   return (
-    <main>
-      <LocalExplanation
-        data={data}
-        features={features}
-        selectedRowIndex={selectedRowIndex}
-      />
-      <Table
-        features={features}
-        setSelectedRowIndex={setSelectedRowIndex}
-        selectedRowIndex={selectedRowIndex}
-        data={data}
-      />
-      {isLoading && <div id="loader">Loading data...</div>}
-    </main>
+    <>
+      <header>
+        <h1>
+          Generalized Additive Model (GAM) Predictions - Local Instance Feature
+          Impact
+        </h1>
+        <div>
+          <label>
+            Dataset
+            <select
+              value={searchParams.get("d")}
+              onChange={({ target: { value } }) => {
+                searchParams.set("d", value);
+                window.location = `?${searchParams}`;
+              }}
+            >
+              <option value="s">Boston Housing</option>
+              <option value="b">Communities and Crime</option>
+            </select>
+          </label>
+          <label>
+            Visualization
+            <select
+              value={searchParams.get("v")}
+              onChange={({ target: { value } }) => {
+                searchParams.set("v", value);
+                window.location = `?${searchParams}`;
+              }}
+            >
+              <option value="w">Waterfall Chart</option>
+              <option value="b">Bubble Chart</option>
+              <option value="t">Tree Map</option>
+            </select>
+          </label>
+        </div>
+      </header>
+      <main>
+        <LocalExplanation
+          data={data}
+          features={features}
+          selectedRowIndex={selectedRowIndex}
+        />
+        <Table
+          features={features}
+          setSelectedRowIndex={setSelectedRowIndex}
+          selectedRowIndex={selectedRowIndex}
+          data={data}
+        />
+        {isLoading && <div id="loader">Loading data...</div>}
+      </main>
+    </>
   );
 }
 
