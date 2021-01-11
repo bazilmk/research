@@ -238,8 +238,8 @@ export class LocalExplanation extends Component {
 
     return {
       data,
-      minY: Math.floor(minY),
-      maxY: Math.ceil(maxY),
+      minY: minY,
+      maxY: maxY,
     };
   }
 
